@@ -9,6 +9,9 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 /* import specific icons */
 import { faBahtSign, faCarSide, faMarker, faPlus, faTrash, faUpload, faUserSecret } from '@fortawesome/free-solid-svg-icons'
+import { Datetime } from 'vue-datetime';
+import 'vue-datetime/dist/vue-datetime.css'
+// Vue.use(Datetime)
 /* add icons to the library */
 library.add(faUserSecret)
 library.add(faCarSide)
@@ -21,6 +24,7 @@ library.add(fas)
 
 /* add font awesome icon component */
 Vue.component('font-awesome-icon', FontAwesomeIcon)
+Vue.component('datetime', Datetime);
 
 Vue.config.productionTip = false
 
