@@ -238,8 +238,9 @@ export default {
                 this.carByType = this.cars
                
             }
+            //แก้เพิ่ม
             else{
-                this.carByType=this.cars.filter((val)=>val.type==this.order_carType);
+                this.carByType=this.cars.filter((val)=>val.type==this.order_carType && val.quantity >0);
                 this.order_carId = ""
             }
             
