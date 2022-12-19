@@ -18,12 +18,18 @@ const routes = [
         path: '/payments/addPayment',
         name: 'addpayment',
         component: () => import('../views/CreateEvidence.vue')
-    }
-    // {
-    //     path: '/orders',
-    //     name: 'order',
-    //     component: () => import('../views/admin/Orders.vue')
-    // },
+    },
+    {
+        path: '/showDetail/:car_id/:amountDay/:location/:dateStart/:dateEnd/:timeStart/:timeEnd',
+        name: 'showDetail',
+        component: () => import('../views/ShowDetail.vue')
+    },
+    {
+        path: '/',
+        name: 'selectCar',
+        component: () => import('../views/SelectCar.vue')
+    },
+   
 ]
 
 const router = new VueRouter({
