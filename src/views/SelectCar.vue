@@ -132,7 +132,7 @@ export default {
             order_dateStert:"",
             order_dateEnd:"",
             //
-            order_carType:[],
+            order_carType:"",
             order_carBrand:"",
             order_carModel:"",
             order_carNumOfSeat:"",
