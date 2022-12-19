@@ -170,6 +170,7 @@ export default {
             // else if(this.user_tel==""){
             //     alert('กรุณากรอกเบอร์โทรศัพท์ในการติดต่อ');
             // }
+                      //แก้เพิ่ม
             else{
                 const formData = new FormData();
                 formData.append("carId", this.order_carId)
@@ -178,12 +179,9 @@ export default {
                 formData.append("dateStart", this.order_dateStert.toString())
                 formData.append("dateEnd",  this.order_dateEnd.toString())
                 formData.append("location", this.order_detail)
-               
                 formData.append("totalPrice",  parseInt(parseInt(this.cars[0].price)*this.$route.params.amountDay))
-               
                 formData.append("user_name", this.user_name)
                 formData.append("user_mail", this.user_email)
-               
                 axios
                     .post("/order/addOrder", formData,
                     {
@@ -191,17 +189,17 @@ export default {
                             'Content-Type': 'multipart/form-data'
                         },
                     })
+                    .then(() => {})
+                    .catch((error) => alert(error.response.data.message+"Post"));
+                 axios
+                    .put("/order/updateQuantity/"+`${this.order_carId}`)
                     .then(() => {
-                        alert("ดำเนินการเสร็จสิ้น")
                         this.$router.push({name: 'selectCar'})
+                         alert("ดำเนินการเสร็จสิ้น")
                     })
-                    .catch((error) => alert(error.response.data.message));
+                    .catch((error) => alert(error.response.data.message+"put")); 
             }
-        }
-
-
-       
-
+        }       
     },
 }
 </script>
