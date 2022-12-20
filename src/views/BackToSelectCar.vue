@@ -19,7 +19,7 @@
                         <div class="column">
                             <div class="select">
                                 <select class="select" name="type" v-model="order_carType"  @change="selectType(order_carType)">
-                                    <option  v-for="type in getOnlyType" v-bind:key="type">{{type.type}}</option>
+                                    <option  v-for="type in getOnlyType" v-bind:key="type.type">{{type.type}}</option>
                                 </select>
                             </div>
                         </div>
@@ -38,7 +38,7 @@
                     <h6>Model:</h6>
                     <div class="columns is-multiline">
                         <!-- <div v-if="order_carType!==''"></div> -->
-                        <div class="column is-4 " v-for="car in carByType" v-bind:key="car">
+                        <div class="column is-4 " v-for="car in carByType" v-bind:key="car._id">
 
                             <div class="card is-hoverable" @click="selectModel(car._id,car.model)"  :style="{ border: car._id==order_carId ? '3px solid red' : '5px solid white'}"  >
                                 <!-- <div :class="[car._id==order_carId ? has-background-danger : '', has-background-light]" > -->
@@ -58,6 +58,28 @@
                             <!-- </div> -->
 
                             </div>
+                            <div v-if="carByType.length==0">
+                                <div class="columns is-multiline">
+                            <div class="column is-4 "  v-for="car in oldCar" v-bind:key="car._id">
+
+                            <div class="card is-hoverable" @click="selectModel(car._id,car.model)" :style="{ border: car._id==order_carId ? '3px solid red' : '5px solid white'}"  >
+                               
+                                 <figure class="image is-256x256 ">
+                                    <img v-bind:src="`data:image/png;base64, ${car.image.data}`">
+                                </figure>
+                                    
+                                <div class="px-5 py-5">
+                                    <h5><span class="has-text-weight-medium">{{car.model}}</span><span style="margin-left:20px;" class="is-size-7 has-text-danger">{{car.brand}}</span></h5>
+                                       
+                                    <div class="small">
+                                        <div>รองรับได้สูงสุด {{car.numOfSeat}} คน</div>
+                                        <div>ราคา {{car.price}} บาทต่อวัน</div>
+                                    </div>
+                                </div>
+                                </div>
+                          
+
+                            </div></div></div>
                         </div>
                     </div>
                 </div>
@@ -125,22 +147,19 @@ export default {
         return{
             cars: [],
             test: true,
-            //location-Date
-            order_detail:"",
-            order_timeStart:"",
-            order_timerEnd:"",
-            order_dateStert:"",
-            order_dateEnd:"",
+            //location-Date 
+            order_detail:this.$route.params.location,
+            order_timeStart:this.$route.params.timeStart,
+            order_timerEnd:this.$route.params.timeEnd,
+            order_dateStert:this.$route.params.dateStart,
+            order_dateEnd:this.$route.params.dateEnd,
             //
-            order_carType:"",
+            order_carType:this.$route.params.type,
             order_carBrand:"",
             order_carModel:"",
-            order_carNumOfSeat:"",
-            order_carPrice:"",
-            order_carQuantity:"",
             order_carId:"",
 
-            check_model:false,
+            
             old_Model:"",
             car_type:[],
             // car_Brand:[],
@@ -151,7 +170,9 @@ export default {
             carByType:[],
             order_amountDay:"",
             order:[],
-           
+            
+            oldCar:[],
+            carId:this.$route.params.order_carId
             
            
            
@@ -161,7 +182,8 @@ export default {
         this.getAllCars()
         this.selectType()
          this.getAllLocations()
-        
+         this.getAllBack()
+         
         
     },
     methods: {
@@ -183,17 +205,8 @@ export default {
                 this.car_type.push({"count":0,"type":"All","check":false})
                 this.getOnlyType = this.car_type.filter((val)=> val.count ===0)
 
-                // this.check_Brand = res.data.map((val)=>{return val.brand}).sort()
-                // this.car_Brand = this.check_Brand.map((val,index)=>{
-                //     if(val==this.check_Brand[index+1]&&index!==this.check_Brand.length-1){
-                //         return {"count":1,"brand":val,"check":false}
-                //     }
-                //     else if(index==this.check_Brand.length-1 && val ==this.check_Brand[index-1]){
-                //         return {"count":1,"brand":val,"check":false}
-                //     }
-                //     return {"count":0,"brand":val,"check":false}
-                //     } )
-                // this.getOnlyBrand = this.car_Brand.filter((val)=> val.count==0)
+                this.oldCar =  this.cars.filter((val)=>val.type==this.order_carType)
+
                     
                
             })
@@ -210,14 +223,15 @@ export default {
                 console.log(err)
             })
         },
-      
+         
 
        
         selectModel(id,model){ 
             this.check_model = true;
             this.order_carModel = model;
-            this.order_carId = id;
+            this.carId = id;
             this.old_Model = model;
+            this.order_carId = id
         },
          selectType(type){
             if(type ===""||type=="All"){
@@ -227,7 +241,7 @@ export default {
             //แก้เพิ่ม
             else{
                 this.carByType=this.cars.filter((val)=>val.type==this.order_carType && val.quantity >0);
-                this.order_carId = ""
+                this.carId = ""
             }
             
         },
