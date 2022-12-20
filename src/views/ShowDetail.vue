@@ -37,7 +37,7 @@
                                 <p>{{order_dateStert}}</p>
                                 <p>{{order_timeStart}}</p>
                                 <p>{{order_dateEnd}}</p>
-                                <p>{{order_timeStart}}</p>
+                                <p>{{order_timerEnd}}</p>
                                 
                                 <p>{{order_detail}}</p>
 
