@@ -37,7 +37,7 @@
                                 <p>{{order_dateStert}}</p>
                                 <p>{{order_timeStart}}</p>
                                 <p>{{order_dateEnd}}</p>
-                                <p>{{order_timeStart}}</p>
+                                <p>{{order_timerEnd}}</p>
                                 
                                 <p>{{order_detail}}</p>
 
@@ -90,7 +90,7 @@
            
             <div class="columns pt-3 is-10">
                 <div class="column">
-                     <router-link :to ="{name: 'selectCar', params: { car_id: this.order_carId ,type:this.cars[0].type,timeStart:this.order_dateStert,timeEnd:this.order_timerEnd,dateStart:this.order_dateStert,dateEnd:this.order_dateEnd,location:this.order_detail}}">
+                     <router-link :to ="{name: 'backToSelectCar', params: { order_carId: this.order_carId ,type:this.cars[0].type,timeStart:this.order_timeStart,timeEnd:this.order_timerEnd,dateStart:this.order_dateStert,dateEnd:this.order_dateEnd,location:this.order_detail}}">
                     <span class="icon is-large mr-6 " >
                         
                        <font-awesome-icon style="width:250px;height:25px" icon="fas fa-arrow-circle-left" />
@@ -170,7 +170,7 @@ export default {
             // else if(this.user_tel==""){
             //     alert('กรุณากรอกเบอร์โทรศัพท์ในการติดต่อ');
             // }
-                      //แก้เพิ่ม
+            //แก้เพิ่ม
             else{
                 const formData = new FormData();
                 formData.append("carId", this.order_carId)

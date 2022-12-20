@@ -19,7 +19,7 @@
                         <div class="column">
                             <div class="select">
                                 <select class="select" name="type" v-model="order_carType"  @change="selectType(order_carType)">
-                                    <option  v-for="type in getOnlyType" v-bind:key="type">{{type.type}}</option>
+                                    <option  v-for="type in getOnlyType" v-bind:key="type.type">{{type.type}}</option>
                                 </select>
                             </div>
                         </div>
@@ -38,7 +38,7 @@
                     <h6>Model:</h6>
                     <div class="columns is-multiline">
                         <!-- <div v-if="order_carType!==''"></div> -->
-                        <div class="column is-4 " v-for="car in carByType" v-bind:key="car">
+                        <div class="column is-4 " v-for="car in carByType" v-bind:key="car._id">
 
                             <div class="card is-hoverable" @click="selectModel(car._id,car.model)"  :style="{ border: car._id==order_carId ? '3px solid red' : '5px solid white'}"  >
                                 <!-- <div :class="[car._id==order_carId ? has-background-danger : '', has-background-light]" > -->
@@ -58,6 +58,28 @@
                             <!-- </div> -->
 
                             </div>
+                            <div v-if="carByType.length==0">
+                                <div class="columns is-multiline">
+                            <div class="column is-4 "  v-for="car in oldCar" v-bind:key="car._id">
+
+                            <div class="card is-hoverable" @click="selectModel(car._id,car.model)" :style="{ border: car._id==order_carId ? '3px solid red' : '5px solid white'}"  >
+                               
+                                 <figure class="image is-256x256 ">
+                                    <img v-bind:src="`data:image/png;base64, ${car.image.data}`">
+                                </figure>
+                                    
+                                <div class="px-5 py-5">
+                                    <h5><span class="has-text-weight-medium">{{car.model}}</span><span style="margin-left:20px;" class="is-size-7 has-text-danger">{{car.brand}}</span></h5>
+                                       
+                                    <div class="small">
+                                        <div>รองรับได้สูงสุด {{car.numOfSeat}} คน</div>
+                                        <div>ราคา {{car.price}} บาทต่อวัน</div>
+                                    </div>
+                                </div>
+                                </div>
+                          
+
+                            </div></div></div>
                         </div>
                     </div>
                 </div>
@@ -70,7 +92,7 @@
             <label class="pl-5"> เวลารับรถ : </label><input type="time" v-model="order_timeStart"/>
             <label class="pl-5"> เวลาคืนรถ : </label><input type="time" v-model="order_timerEnd"/>
             
-            <h3 class="py-2">สถานที่นัดรับ</h3>
+            <h3 class="py-2">สถานที่นัดรับ-คืนรถ</h3>
             <div >
                 
                 <div class="select">
@@ -125,32 +147,32 @@ export default {
         return{
             cars: [],
             test: true,
-            //location-Date
-            order_detail:"",
-            order_timeStart:"",
-            order_timerEnd:"",
-            order_dateStert:"",
-            order_dateEnd:"",
+            //location-Date 
+            order_detail:this.$route.params.location,
+            order_timeStart:this.$route.params.timeStart,
+            order_timerEnd:this.$route.params.timeEnd,
+            order_dateStert:this.$route.params.dateStart,
+            order_dateEnd:this.$route.params.dateEnd,
             //
-            order_carType:"",
+            order_carType:this.$route.params.type,
             order_carBrand:"",
             order_carModel:"",
-            order_carNumOfSeat:"",
-            order_carPrice:"",
-            order_carQuantity:"",
             order_carId:"",
 
-            check_model:false,
+            
             old_Model:"",
             car_type:[],
-            car_Brand:[],
+            // car_Brand:[],
             check_type:[],
-            check_Brand:[],
+            // check_Brand:[],
             getOnlyType:[],
-            getOnlyBrand:[],
+            // getOnlyBrand:[],
             carByType:[],
             order_amountDay:"",
             order:[],
+            
+            oldCar:[],
+            carId:this.$route.params.order_carId
             
            
            
@@ -159,7 +181,10 @@ export default {
     mounted(){
         this.getAllCars()
         this.selectType()
-        this.getAllLocations()
+         this.getAllLocations()
+         this.getAllBack()
+         
+        
     },
     methods: {
         getAllCars(){
@@ -179,6 +204,9 @@ export default {
                     } )
                 this.car_type.push({"count":0,"type":"All","check":false})
                 this.getOnlyType = this.car_type.filter((val)=> val.count ===0)
+
+                this.oldCar =  this.cars.filter((val)=>val.type==this.order_carType)
+
                     
                
             })
@@ -195,12 +223,15 @@ export default {
                 console.log(err)
             })
         },
-        
+         
+
+       
         selectModel(id,model){ 
             this.check_model = true;
             this.order_carModel = model;
-            this.order_carId = id;
+            this.carId = id;
             this.old_Model = model;
+            this.order_carId = id
         },
          selectType(type){
             if(type ===""||type=="All"){
@@ -210,7 +241,7 @@ export default {
             //แก้เพิ่ม
             else{
                 this.carByType=this.cars.filter((val)=>val.type==this.order_carType && val.quantity >0);
-                this.order_carId = ""
+                this.carId = ""
             }
             
         },
@@ -248,6 +279,7 @@ export default {
                     this.order_amountDay = day_end+((30*month)-day_start)
                     console.log(this.order_amountDay)
                 }
+                this.page = 2;
                 
                 this.$router.push({name: 'showDetail',
                 params:{car_id:this.order_carId,amountDay:this.order_amountDay,location:this.order_detail,dateStart:this.order_dateStert,dateEnd:this.order_dateEnd,timeStart:this.order_timeStart,timeEnd:this.order_timerEnd}
