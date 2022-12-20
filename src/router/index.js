@@ -19,7 +19,7 @@ const routes = [
         name: 'addpayment',
         component: () => import('../views/CreateEvidence.vue')
     },
-    {
+   {
         path: '/showDetail/:car_id/:amountDay/:location/:dateStart/:dateEnd/:timeStart/:timeEnd',
         name: 'showDetail',
         component: () => import('../views/ShowDetail.vue')
@@ -28,6 +28,11 @@ const routes = [
         path: '/',
         name: 'selectCar',
         component: () => import('../views/SelectCar.vue')
+    },
+    {
+        path: '/:order_carId/:type/:timeStart/:timeEnd/:dateStart/:dateEnd/:location',
+        name: 'backToSelectCar',
+        component: () => import('../views/BackToSelectCar.vue')
     },
 
 
