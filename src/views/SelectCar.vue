@@ -159,9 +159,7 @@ export default {
     mounted(){
         this.getAllCars()
         this.selectType()
-         this.getAllLocations()
-         this.getAllBack()
-        
+        this.getAllLocations()
     },
     methods: {
         getAllCars(){
@@ -173,28 +171,14 @@ export default {
                     if(val==this.check_type[index+1]&&index!==this.check_type.length-1){
                         return {"count":1,"type":val,"check":false}
                     }
-                    else if(index==this.check_type.length-1 && val ==this.check_type[index-1]){
-                        return {"count":1,"type":val,"check":false},{"count":0,"type":"All","check":false}
+                    else if(index==this.check_type.length-1 && val ==this.check_type[index-1] ){
+                        return {"count":1,"type":val,"check":false}
                     }
-                    else if(index==this.check_type.length-1){
-                        return {"count":0,"type":val,"check":false},{"count":0,"type":"All","check":false}
-
-                    }
+                    
                     return {"count":0,"type":val,"check":false}
                     } )
-                this.getOnlyType = this.car_type.filter((val)=> val.count==0)
-
-                this.check_Brand = res.data.map((val)=>{return val.brand}).sort()
-                this.car_Brand = this.check_Brand.map((val,index)=>{
-                    if(val==this.check_Brand[index+1]&&index!==this.check_Brand.length-1){
-                        return {"count":1,"brand":val,"check":false}
-                    }
-                    else if(index==this.check_Brand.length-1 && val ==this.check_Brand[index-1]){
-                        return {"count":1,"brand":val,"check":false}
-                    }
-                    return {"count":0,"brand":val,"check":false}
-                    } )
-                this.getOnlyBrand = this.car_Brand.filter((val)=> val.count==0)
+                this.car_type.push({"count":0,"type":"All","check":false})
+                this.getOnlyType = this.car_type.filter((val)=> val.count ===0)
                     
                
             })
@@ -211,22 +195,7 @@ export default {
                 console.log(err)
             })
         },
-         getAllBack(){
-            // axios.get("/"+`${this.route.params.car_id}`+"/"+`${this.route.params.type}`+"/"+`${this.route.params.timeStart}`+"/+"+`${this.route.params.timeEnd}`+"/"+`${this.route.params.dateStart}`+"/"+`${this.route.params.dateEnd}`+"/"+`${this.route.params.location}`)
-             axios.get("/"+`${this.route.params.car_id}`+`${this.route.params.type}`+`${this.route.params.timeStart}`+`${this.route.params.timeEnd}`+`${this.route.params.dateStart}`+`${this.route.params.dateEnd}`+`${this.route.params.location}`)
-            .then((res) => {
-                this.order_carId = this.route.params.car_id
-                this.timeStart= this.route.params.timeStart
-                this.timeEnd  = this.route.params.timeEnd
-                this.getOnlyType =this.route.params.location
-                console.log(res)
-            })
-            .catch((err) => {
-                console.log(err)
-            })
-        },
-
-       
+        
         selectModel(id,model){ 
             this.check_model = true;
             this.order_carModel = model;
