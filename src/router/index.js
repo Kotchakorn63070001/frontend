@@ -29,6 +29,11 @@ const routes = [
         name: 'selectCar',
         component: () => import('../views/SelectCar.vue')
     },
+     {
+        path: '/:order_carId/:type/:timeStart/:timeEnd/:dateStart/:dateEnd/:location',
+        name: 'backToSelectCar',
+        component: () => import('../views/BackToSelectCar.vue')
+    },
    
 ]
 
