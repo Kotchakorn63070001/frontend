@@ -19,7 +19,9 @@
     <div class="navbar-start">
       
       <a class="navbar-item">
+        <router-link to="/order" class="has-text-white">
         <span>Order</span>
+        </router-link>
       </a>
 
       <a class="navbar-item">
