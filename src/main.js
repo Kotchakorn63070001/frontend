@@ -24,7 +24,7 @@ library.add(fas)
 
 /* add font awesome icon component */
 Vue.component('font-awesome-icon', FontAwesomeIcon)
-Vue.component('datetime', Datetime);
+Vue.component('date-time', Datetime);
 
 Vue.config.productionTip = false
 

@@ -309,6 +309,7 @@ export default {
             .then((res) => {
                 console.log(res)
                 this.modalDeleteCar = false
+                document.location.reload(true);
             })
             .catch((err) => {
                 console.log(err)
@@ -377,6 +378,7 @@ export default {
                     .then(() => {
                         this.$router.push({name: 'ourcar'})
                         this.modalAddCar = false
+                        document.location.reload(true);
                     })
                     .catch((error) => {
                         alert(error.response.data.message)
@@ -426,6 +428,7 @@ export default {
                         this.$router.push({name: 'ourcar'})
                         this.modalUpdateCar = false
                         this.checkUpdateNewImage = false
+                        document.location.reload(true);
                     })
                     .catch((error) => {
                         alert(error.response.data.message)

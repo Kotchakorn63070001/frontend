@@ -29,7 +29,9 @@
       </a>
 
       <a class="navbar-item">
-        Payment
+        <router-link to="/payments/getAllPayments" class="has-text-white">
+          <span>Payment</span>
+        </router-link>
       </a>
 
       <a class="navbar-item">

@@ -29,6 +29,16 @@ const routes = [
         name: 'selectCar',
         component: () => import('../views/SelectCar.vue')
     },
+    {
+        path: '/payments/getAllPayments',
+        name: 'allPayment',
+        component: () => import('../views/admin/AllPayment.vue')
+    }
+    // {
+    //     path: '/payments',
+    //     name: 'pay-ments',
+    //     component: () => import('../views/admin/PaymentAll.vue')
+    // },
    
 ]
 
