@@ -38,7 +38,12 @@ const routes = [
         path: '/payments/getAllPayments',
         name: 'allPayment',
         component: () => import('../views/admin/AllPayment.vue')
-    }
+    },
+    {
+        path: '/order',
+        name: 'order',
+        component: () => import('../views/admin/OrderAll.vue')
+    },
 ]
 
 const router = new VueRouter({
