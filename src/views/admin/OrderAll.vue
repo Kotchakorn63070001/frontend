@@ -1,4 +1,72 @@
 <template>
+<div>
+<nav class="navbar is-info" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    
+    <a class="navbar-item" >
+      <span class="icon-text has-text-warning">
+        <span><h1 class="title is-4 has-text-warning">CARENT</h1></span>
+        <span class="icon is-medium	">
+          <font-awesome-icon icon="fa-solid fa-car-side" />
+        </span>
+      </span>
+    </a>
+  </div>
+
+  <div id="navbarBasicExample" class="navbar-menu">
+    <div class="navbar-start">
+      
+      <a class="navbar-item">
+        <router-link to="/order" class="has-text-white">
+        <span>Order</span>
+        </router-link>
+      </a>
+
+      <a class="navbar-item">
+        <router-link to="/cars/getAllCars" class="has-text-white">
+          <span>Our Car</span>
+        </router-link>
+      </a>
+
+      <a class="navbar-item">
+        <router-link to="/payments/getAllPayments" class="has-text-white">
+          <span>Payment</span>
+        </router-link>
+      </a>
+
+      
+
+    </div>
+
+    <div class="navbar-end">
+      <div class="navbar-item" v-if="user && !isLogin() ">
+        <div class="buttons">
+          <a class="button is-primary">
+            <router-link to="/admin/signUp">
+            <strong>Sign up</strong>
+        </router-link>
+          </a>
+          <a class="button is-light">
+            <router-link to="/admin/logIn">
+            Log in
+          </router-link>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div >
+      <div class="navbar-item" v-if="!user"   >
+        <div class="buttons">
+          <a class="button is-light"  @click="logout()">
+            Log out
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  </nav>
     <div class="container-fluid ">
         <div class="content py-5 px-5">
             <!-- <h3>Order</h3> -->
@@ -127,6 +195,7 @@
        
         
     </div>
+   </div>
 </template>
 
 <script>
@@ -142,12 +211,14 @@ export default {
             check_pending:true,
             check_success_deny:false,
             filter:"ทั้งหมด",
-            orderfilter:[]
+            orderfilter:[],
+             user: true,
         }
     },
     mounted(){
         this.getAllOrders()
         this.getAllCars()
+         this.isLogin()
     },
     methods:{
         getAllOrders(){
@@ -215,7 +286,25 @@ export default {
                 this.orderfilter =this.orders
             }
 
+        },
+        logout () {
+        localStorage.clear()
+        this.user = true
+        this.$router.replace({ name: "logIn"}).catch(()=>{});
+      },
+       isLogin(){
+        const token = localStorage.getItem('Token')
+      if (token) {
+        this.user = false;
+        // return this.user;
+        console.log('เข้ามาแล้ว')
+        console.log(this.user)
+        console.log('เข้ามาแล้ว' +localStorage.getItem('Token') )
+        console.log("islogin" +this.islogin)
+        return true
         }
+        return false;
+      },
         
 
     }
