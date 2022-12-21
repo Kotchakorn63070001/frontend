@@ -132,7 +132,7 @@ export default {
             order_dateStert:"",
             order_dateEnd:"",
             //
-            order_carType:"",
+            order_carType:"All",
             order_carBrand:"",
             order_carModel:"",
             order_carNumOfSeat:"",
@@ -194,6 +194,7 @@ export default {
                 //     return {"count":0,"brand":val,"check":false}
                 //     } )
                 // this.getOnlyBrand = this.car_Brand.filter((val)=> val.count==0)
+                this.carByType = this.cars
                     
                
             })
