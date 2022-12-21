@@ -258,7 +258,7 @@ export default {
             else if(this.order_detail==""){
                 alert('กรุณาเลือกสถานที่ในการนัดรับรถ');
             }
-            else {
+             else {
                 let month_start= parseInt(this.order_dateStert.slice(5,7))
                 let month_end= parseInt(this.order_dateEnd.slice(5,7))
                 let day_start= parseInt(this.order_dateStert.slice(8,11))
@@ -272,6 +272,15 @@ export default {
                 console.log( day_end+"----m-e")
                 if(month_end==month_start){
                     this.order_amountDay = day_end-day_start;
+                    if(this.order_amountDay ==0){
+                        this.order_amountDay =1
+                    }
+                    else if(this.order_amountDay <0){
+                        alert('กรุณากรอกวัน-เวลาใหม่อีกรอบ')
+                    }
+                    else{
+                        this.order_amountDay = day_end-day_start;
+                    }
                     console.log(this.order_amountDay)
 
                 }
@@ -285,11 +294,7 @@ export default {
                 params:{car_id:this.order_carId,amountDay:this.order_amountDay,location:this.order_detail,dateStart:this.order_dateStert,dateEnd:this.order_dateEnd,timeStart:this.order_timeStart,timeEnd:this.order_timerEnd}
                  })
                
-            }
-           
-            
-            
-            
+            } 
            
         },
 
