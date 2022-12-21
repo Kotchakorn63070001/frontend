@@ -21,8 +21,7 @@ library.add(faBahtSign)
 library.add(faUpload)
 library.add(faPlus)
 library.add(fas)
-library.add(faUser)
-library.add(faLock)
+
 
 /* add font awesome icon component */
 Vue.component('font-awesome-icon', FontAwesomeIcon)
