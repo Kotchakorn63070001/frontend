@@ -1,4 +1,18 @@
 <template>
+    <div>
+        <nav class="navbar is-info" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    
+    <a class="navbar-item" >
+      <span class="icon-text has-text-warning">
+        <span><h1 class="title is-4 has-text-warning">CARENT</h1></span>
+        <span class="icon is-medium	">
+          <font-awesome-icon icon="fa-solid fa-car-side" />
+        </span>
+      </span>
+    </a>
+  </div>
+  </nav> 
     <div class="container-fluid has-background-info-light">
       <div class="container is-max-desktop p-5">
             <div class="column pt-6 pl-0 pr-0 ">
@@ -109,7 +123,7 @@
         </div>
     </div>
        
-        
+        </div>
                
 </template>
 
