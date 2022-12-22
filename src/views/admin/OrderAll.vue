@@ -113,13 +113,14 @@
                         <th>สถานะ (Status)</th>
                         
                         <th>Action</th>
+                      <th>Confirm Email</th>
                         <th></th>
                        
                     </tr>
                 </thead>
                 <tbody class="has-background-white" v-for="(order,index) in orderfilter" :key="order._id" >
                     <tr >
-                        <td>{{order._id}}</td>
+                        <td > {{order._id}}</td>
                         <td>{{order.user_mail}}</td>
                         <td>{{order.user_name}}</td>
                         <td>฿{{order.totalPrice}}</td>
@@ -127,7 +128,7 @@
                         <td v-if="order.status_check =='Pending'">
                             <div class="columns"  >
                                 
-                                    <div class="column is-2 mx-4" @click="successStatus(index)">
+                                    <div class="column is-2 mx-4" @click="successStatus(index)" >
                                         <button class="button is-success" ><font-awesome-icon style="width:30px;height:25px"  icon="fas fa-circle-check" /></button>
                                     </div>
                                     <div class="column is-2 mx-4" @click="denyStatus(index)">
@@ -137,6 +138,8 @@
                            
                         </td>
                         <td v-else></td>
+                        <td><button class="button is-info" @click="sendEmail(order,index)">Send Email</button></td>
+
                         <td><button class="button" @click="showModalDetail(index,order.carId)">Detail</button></td>
                         
                     </tr>
@@ -147,7 +150,7 @@
 
             </div>
             <!-- Modal Show Detail -->
-            <div class="modal" v-bind:class="{'is-active' : modalDetail}" v-if="carShow.length>0">
+            <div class="modal" v-bind:class="{'is-active' : modalDetail}"  v-if="carShow.length>0">
             <div class="modal-background" @click="modalDetail = !modalDetail"></div>
             <div class="modal-card" >
                 <header class="modal-card-head">
@@ -170,9 +173,7 @@
                             <div>dateEnd:</div>
                             <div>timeEnd:</div>
                             <div>Location:</div>
-                            
-                             
-                                        
+
                         </div>
                         <div class="column mx-4">
                             <div>{{carShow[0].model}}</div>       
@@ -192,14 +193,13 @@
             </div>
         </div>
         </div>
-       
-        
     </div>
    </div>
 </template>
 
 <script>
 import axios from '@/plugins/axios'
+import emailjs from 'emailjs-com';
 export default {
     data(){
         return{
@@ -213,6 +213,9 @@ export default {
             filter:"ทั้งหมด",
             orderfilter:[],
              user: true,
+            user_name:"",
+            user_mail:"",
+            id:"",
         }
     },
     mounted(){
@@ -221,6 +224,24 @@ export default {
          this.isLogin()
     },
     methods:{
+      sendEmail(order, index) {
+        this.user_name = this.orders[index].user_name;
+        this.user_mail = this.orders[index].user_mail;
+        this.id = this.orders[index]._id;
+        var templateParams = {
+            email : this.user_mail,
+            user_name : this.user_name,
+            id : this.id
+          };
+          emailjs.send('service_0nazvow', 'template_lkxyk4c', templateParams, "R1-S3aMadPkVaUqP3")
+              .then(function (response)
+        {
+          console.log(response.status, response.text);
+            alert("ส่งอีเมลล์สำเร็จ");
+        },function (error){
+                console.log("fail", error);
+              })
+      },
         getAllOrders(){
             axios.get("/order/getAllOrders")
             .then((res) => {
@@ -285,7 +306,6 @@ export default {
             else{
                 this.orderfilter =this.orders
             }
-
         },
         logout () {
         localStorage.clear()
@@ -296,13 +316,15 @@ export default {
         const token = localStorage.getItem('Token')
       if (token) {
         this.user = false;
-       
+        // return this.user;
+        console.log('เข้ามาแล้ว')
+        console.log(this.user)
+        console.log('เข้ามาแล้ว' +localStorage.getItem('Token') )
+        console.log("islogin" +this.islogin)
         return true
         }
         return false;
       },
-        
-
     }
 }
 </script>
