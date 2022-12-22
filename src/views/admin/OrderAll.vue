@@ -216,6 +216,7 @@ export default {
             user_name:"",
             user_mail:"",
             id:"",
+            totalPrice:'',
         }
     },
     mounted(){
@@ -228,10 +229,12 @@ export default {
         this.user_name = this.orders[index].user_name;
         this.user_mail = this.orders[index].user_mail;
         this.id = this.orders[index]._id;
+        this.totalPrice = this.orders[index].totalPrice;
         var templateParams = {
             email : this.user_mail,
             user_name : this.user_name,
-            id : this.id
+            id : this.id,
+            totalPrice : this.totalPrice,
           };
           emailjs.send('service_0nazvow', 'template_lkxyk4c', templateParams, "R1-S3aMadPkVaUqP3")
               .then(function (response)
@@ -316,7 +319,11 @@ export default {
         const token = localStorage.getItem('Token')
       if (token) {
         this.user = false;
-        
+        // return this.user;
+        console.log('เข้ามาแล้ว')
+        console.log(this.user)
+        console.log('เข้ามาแล้ว' +localStorage.getItem('Token') )
+        console.log("islogin" +this.islogin)
         return true
         }
         return false;
