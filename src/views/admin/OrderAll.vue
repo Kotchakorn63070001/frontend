@@ -316,11 +316,7 @@ export default {
         const token = localStorage.getItem('Token')
       if (token) {
         this.user = false;
-        // return this.user;
-        console.log('เข้ามาแล้ว')
-        console.log(this.user)
-        console.log('เข้ามาแล้ว' +localStorage.getItem('Token') )
-        console.log("islogin" +this.islogin)
+        
         return true
         }
         return false;
