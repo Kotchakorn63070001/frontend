@@ -77,7 +77,7 @@
           <div class="columns is-centered">
             <div class="column is-5-tablet is-4-desktop is-3-widescreen">
               <!-- <form action="" class="box"> -->
-               <h1 style="margin-bottom: 5%;font-size: 30px;font-weight:50px;">SingUp</h1>
+               <h1 style="margin-bottom: 5%;font-size: 30px;font-weight:50px;">SignUp</h1>
                 <div class="field">
                   <label for="" class="label">Email</label>
                   
@@ -114,7 +114,7 @@
 
                 <div class="field">
                   <button class="button is-success" style="margin-bottom: 5px;margin-left: 75px;" @click="submit()">
-                    Sing Up
+                    Sign Up
                   </button>
                 </div>
                 
